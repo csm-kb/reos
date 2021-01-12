@@ -9,6 +9,8 @@
 
 /** Converts an integer to an ASCII-encoded string. */
 void int_to_ascii(int n, char *str);
+/** Converts a hexadecimal number to an ASCII-encoded string. */
+void hex_to_ascii(int n, char *str);
 
 void reverse(char *s);
 

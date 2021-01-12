@@ -130,6 +130,6 @@ int memcmp(const void *ptr1, const void *ptr2, size_t len) {
  * at 0x1000 as defined on the Makefile */
 uint32_t free_mem_addr = 0x10000;
 
-void *kmalloc(size_t size, int align, void *paddr) {
+void *kmalloc(size_t size, size_t align, void *paddr) {
 
 }

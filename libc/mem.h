@@ -37,6 +37,6 @@ void *memmove(void *dst, const void *src, size_t len);
  */
 int memcmp(const void *ptr1, const void *ptr2, size_t len);
 
-void *kmalloc(size_t size, int align, void *paddr);
+void *kmalloc(size_t size, size_t align, void *paddr);
 
 #endif //REOS_MEM_H

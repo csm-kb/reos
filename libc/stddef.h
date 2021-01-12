@@ -10,14 +10,17 @@
 #endif /* NULL */
 
 #ifndef _WCHAR_T
+#define _WCHAR_T
 typedef unsigned int    wchar_t;
 #endif /* _WCHAR_T */
 
 #ifndef _PTRDIFF_T
+#define _PTRDIFF_T
 typedef long            ptrdiff_t;
 #endif /* _PTRDIFF_T */
 
 #ifndef _SIZE_T
+#define _SIZE_T
 typedef unsigned long   size_t;
 #endif /* _SIZE_T */
 
