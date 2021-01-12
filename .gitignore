@@ -1,6 +1,7 @@
 # Directories
 bin/
 obj/
+os-image
 
 # Prerequisites
 *.d
