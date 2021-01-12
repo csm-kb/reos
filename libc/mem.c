@@ -4,15 +4,15 @@
 
 #include "mem.h"
 
-void *memcpy(void *dst, const void *src, uint32_t len) {
-	uint32_t i;
+void *memcpy(void *dst, const void *src, size_t len) {
+	size_t i;
 	/* memcpy does not support overlapping buffers, so always do it forwards. (Don't change this without adjusting
 	 * memmove.) For speedy copying, optimize the common case where both pointers and the length are word-aligned,
 	 * and copy word-at-a-time instead of byte-at-a-time. Otherwise, copy by bytes. The alignment logic below should
 	 * be portable. We rely on the compiler to be reasonably intelligent about optimizing the divides and modulos
 	 * out. Fortunately, it is.
          */
-	if ((uint64_t) dst % sizeof(long) == 0 && (uint64_t) src % sizeof(long) == 0 && len % sizeof(long) == 0) {
+	if ((uintptr_t) dst % sizeof(long) == 0 && (uintptr_t) src % sizeof(long) == 0 && len % sizeof(long) == 0) {
 		long *d = dst;
 		const long *s = src;
 
@@ -31,9 +31,9 @@ void *memcpy(void *dst, const void *src, uint32_t len) {
 	return dst;
 }
 
-void *memset(void *ptr, uint8_t value, uint32_t len) {
-	uint32_t i;
-	if ((uint64_t) ptr % sizeof(long) == 0 && len % sizeof(long) == 0) {
+void *memset(void *ptr, uint8_t value, size_t len) {
+	size_t i;
+	if ((uintptr_t) ptr % sizeof(long) == 0 && len % sizeof(long) == 0) {
 		long *d = ptr;
 
 		for (i = 0; i < len / sizeof(long); i++) {
@@ -48,8 +48,8 @@ void *memset(void *ptr, uint8_t value, uint32_t len) {
 	}
 }
 
-void *memmove(void *dst, const void *src, uint32_t len) {
-	uint32_t i;
+void *memmove(void *dst, const void *src, size_t len) {
+	size_t i;
 	/* If the buffers don't overlap, it doesn't matter what direction we copy in. If they do, it does, so just
 	 * assume they always do. We don't concern ourselves with the possibility that the region to copy might roll
 	 * over across the top of memory, because it's not going to happen.
@@ -70,14 +70,14 @@ void *memmove(void *dst, const void *src, uint32_t len) {
 	 *                     |___|
 	 */
 
-	if ((uint64_t) dst < (uint64_t) src) {
+	if ((uintptr_t) dst < (uintptr_t) src) {
 		/* As author/maintainer of libc, take advantage of the fact that we know memcpy copies forwards. */
 		return memcpy(dst, src, len);
 	}
 
 	/* Copy by words in the common case. Look in memcpy for more information. */
 
-	if ((uint64_t) dst % sizeof(long) == 0 && (uint64_t) src % sizeof(long) == 0 && len % sizeof(long) == 0) {
+	if ((uintptr_t) dst % sizeof(long) == 0 && (uintptr_t) src % sizeof(long) == 0 && len % sizeof(long) == 0) {
 		long *d = dst;
 		const long *s = src;
 
@@ -97,7 +97,7 @@ void *memmove(void *dst, const void *src, uint32_t len) {
 	return dst;
 }
 
-int memcmp(const void *ptr1, const void *ptr2, uint32_t len) {
+int memcmp(const void *ptr1, const void *ptr2, size_t len) {
 	uint32_t i;
 
 	if ((uint64_t)ptr1 % sizeof(long) == 0 && (uint64_t)ptr2 % sizeof(long) == 0 && len % sizeof(long) == 0) {
@@ -123,4 +123,13 @@ int memcmp(const void *ptr1, const void *ptr2, uint32_t len) {
 		}
 		return 0;
 	}
+}
+
+/* This should be computed at link time, but a hardcoded
+ * value is fine for now. Remember that our kernel starts
+ * at 0x1000 as defined on the Makefile */
+uint32_t free_mem_addr = 0x10000;
+
+void *kmalloc(size_t size, int align, void *paddr) {
+
 }
