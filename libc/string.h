@@ -5,7 +5,7 @@
 #ifndef REOS_STRING_H
 #define REOS_STRING_H
 
-#include "stddef.h"
+#include <stddef.h>
 
 /** Converts an integer to an ASCII-encoded string. */
 void int_to_ascii(int n, char *str);
@@ -13,8 +13,6 @@ void int_to_ascii(int n, char *str);
 void hex_to_ascii(int n, char *str);
 
 void reverse(char *s);
-
-void backspace(char *s);
 
 void append(char *s, char n);
 
@@ -24,6 +22,11 @@ size_t strlen(const char *s);
  * Compares two strings. Returns zero if all characters are equal, a negative value if s1 is less than s2, or a
  * positive value if s1 is greater than s2. */
 int strcmp(const char *s1, const char *s2);
+/**
+ * Compares two strings, reading up to the specified num of bytes. Returns zero if all characters are equal, a negative
+ * value if s1 is less than s2, or a positive value if s1 is greater than s2.
+ */
+int strncmp(const char *s1, const char *s2, size_t num);
 /**
  * Appends one string to another. The array pointed to by dst must have enough room to support holding
  * itself plus the contents of src. Both strings must be null-terminated.

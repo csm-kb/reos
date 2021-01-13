@@ -46,6 +46,7 @@ void *memset(void *ptr, uint8_t value, size_t len) {
 			d[i] = value;
 		}
 	}
+	return ptr;
 }
 
 void *memmove(void *dst, const void *src, size_t len) {
@@ -100,7 +101,7 @@ void *memmove(void *dst, const void *src, size_t len) {
 int memcmp(const void *ptr1, const void *ptr2, size_t len) {
 	uint32_t i;
 
-	if ((uint64_t)ptr1 % sizeof(long) == 0 && (uint64_t)ptr2 % sizeof(long) == 0 && len % sizeof(long) == 0) {
+	if ((uintptr_t)ptr1 % sizeof(long) == 0 && (uintptr_t)ptr2 % sizeof(long) == 0 && len % sizeof(long) == 0) {
 		const long *d = ptr1;
 		const long *s = ptr2;
 
@@ -125,11 +126,6 @@ int memcmp(const void *ptr1, const void *ptr2, size_t len) {
 	}
 }
 
-/* This should be computed at link time, but a hardcoded
- * value is fine for now. Remember that our kernel starts
- * at 0x1000 as defined on the Makefile */
-uint32_t free_mem_addr = 0x10000;
-
 void *kmalloc(size_t size, size_t align, void *paddr) {
-
+	return NULL;
 }

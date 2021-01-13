@@ -11,4 +11,6 @@
  */
 #define UNUSED(x) (void)(x)
 
+#define CHECK_BIT(v,p) ((v) & (1<<(p)))
+
 #endif //REOS_FUNCTION_H

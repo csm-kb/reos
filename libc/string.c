@@ -51,7 +51,7 @@ void append(char *s, char n) {
 	s[len+1] = '\0';
 }
 
-void backspace(char *s) {
+void str_backspace(char *s) {
 	int len = strlen(s);
 	s[len-1] = '\0';
 }
@@ -65,6 +65,14 @@ size_t strlen(const char *s) {
 int strcmp(const char *s1, const char *s2) {
 	int i;
 	for (i = 0; s1[i] == s2[i]; i++) {
+		if (s1[i] == '\0') return 0;
+	}
+	return s1[i] - s2[i];
+}
+
+int strncmp(const char *s1, const char *s2, size_t num) {
+	int i;
+	for (i = 0; (i < num) || (s1[i] == s2[i]); i++) {
 		if (s1[i] == '\0') return 0;
 	}
 	return s1[i] - s2[i];
